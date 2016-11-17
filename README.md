@@ -52,7 +52,7 @@ dispatch({
 });
 ```
 
-Timer that ends after 10 seconds
+Timer that ends after 10 seconds:
 ```javascript
 import {START_TIMER} from 'redux-timer-middleware';
 
