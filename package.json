@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/library-boilerplate-author/library-boilerplate.git"
+    "url": "https://github.com/matpaul/redux-timer-middleware.git"
   },
   "keywords": [
     "redux-timer-middleware",
@@ -24,9 +24,9 @@
   "author": "Matyukov Pavel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/library-boilerplate-author/library-boilerplate/issues"
+    "url": "https://github.com/matpaul/redux-timer-middleware/issues"
   },
-  "homepage": "https://github.com/library-boilerplate-author/library-boilerplate",
+  "homepage": "https://github.com/matpaul/redux-timer-middleware",
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
