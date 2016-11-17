@@ -1,0 +1,51 @@
+{
+  "name": "redux-timer-middleware",
+  "version": "0.1.0",
+  "description": "redux-timer-middleware",
+  "main": "lib/index.js",
+  "scripts": {
+    "clean": "rimraf lib dist",
+    "build": "babel src --out-dir lib",
+    "build:umd": "webpack src/index.js dist/redux-timer-middleware.js && NODE_ENV=production webpack src/index.js dist/redux-timer-middleware.min.js",
+    "lint": "eslint src test",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test npm test -- --watch",
+    "prepublish": "npm run test && npm run clean && npm run build && npm run build:umd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/library-boilerplate-author/library-boilerplate.git"
+  },
+  "keywords": [
+    "redux-timer-middleware",
+    "timer",
+    "middleware"
+  ],
+  "author": "Matyukov Pavel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/library-boilerplate-author/library-boilerplate/issues"
+  },
+  "homepage": "https://github.com/library-boilerplate-author/library-boilerplate",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.0",
+    "babel-jest": "^17.0.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "eslint": "^3.10",
+    "eslint-config-airbnb": "13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
+    "expect": "^1.6.0",
+    "jest": "^17.0.3",
+    "redux-mock-store": "^1.2.1",
+    "redux": "^3.6.0",
+    "rimraf": "^2.3.4",
+    "webpack": "^1.9.6"
+  },
+  "dependencies": {
+    "invariant": "^2.0.0"
+  }
+}
