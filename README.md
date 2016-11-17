@@ -1,7 +1,6 @@
 # redux-timer-middleware
 
-Simple middleware for periodically dispatch actions
-
+Simple middleware to dispatch actions periodically
 ## Installation
 
     $ npm i --save redux-timer-middleware
@@ -16,17 +15,17 @@ applyMiddleware(timerMiddleware)(createStore)
 ```
 
 #### Start Timer
-You need dispatch action START_TIMER and provide in payload:
-- actionName (required) - action that will be dispatch each timer tick
+You need to dispatch action START_TIMER and provide in payload:
+- actionName (required) - action that will be dispatched each timer tick
 - timerName (required) - timer name (need for stop feature)
 - timerInterval - interval in ms (default 1000)
-- timerPeriod - tick times after timer ended, when timer end action name with _END will dispatched
+- timerPeriod - tick count after which timer ends, when timer ends - action name with _END will be dispatched
 
-#### Stop Timer or stop multiple timers
-You need dispatch action STOP_TIMER and provide in payload:
+#### Stop Timer or Stop multiple timers
+You need to dispatch action STOP_TIMER and provide in payload:
 - timerName (required) - timer name that we stop
 or 
-- timerNames [] - timers name in array if we need stop multiple timers
+- timerNames [] - timers' names in array if we need to stop multiple timers
 
 ### Examples
 Infinite timer:
@@ -36,8 +35,8 @@ import {START_TIMER} from 'redux-timer-middleware';
 dispatch({
     type: START_TIMER,
     payload: {
-        actionName: 'SOME_ACTION_TICK'
-        timerName: 'testTimer'
+        actionName: 'SOME_ACTION_TICK',
+        timerName: 'infiniteTimer'
     }
 });
 ```
@@ -49,23 +48,23 @@ import {STOP_TIMER} from 'redux-timer-middleware';
 dispatch({
     type: STOP_TIMER,
     payload: {
-        timerName: 'testTimer'
+        timerName: 'infiniteTimer'
     }
 });
 ```
 
-Timer that ended after 10 seconds
+Timer that ends after 10 seconds
 ```javascript
 import {START_TIMER} from 'redux-timer-middleware';
 
 dispatch({
     type: START_TIMER,
     payload: {
-        actionName: 'SOME_ACTION_TICK'
-        timerName: 'testTimer'
+        actionName: 'SOME_ACTION_TICK',
+        timerName: 'testTimer',
         timerPeriod: 10
     }
 });
 ```
-After timer end it will dispatched action with type 'SOME_ACTION_TICK_END'
+After timer ends action with type 'SOME_ACTION_TICK_END' will be dispatched
 
