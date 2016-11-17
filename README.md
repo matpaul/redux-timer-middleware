@@ -24,8 +24,7 @@ You need to dispatch action START_TIMER and provide in payload:
 #### Stop Timer or Stop multiple timers
 You need to dispatch action STOP_TIMER and provide in payload:
 - timerName (required) - timer name that we stop
-or 
-- timerNames [] - timers' names in array if we need to stop multiple timers
+- timerNames [] - timer names in array if we need to stop multiple timers
 
 ### Examples
 Infinite timer:
