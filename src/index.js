@@ -17,54 +17,64 @@ export default function timerMiddleware({dispatch}) {
     };
 
     return next => action => {
-        if (action.type === START_TIMER) {
-            const {
-                timerName, // timer name - need for search in timers obj
-                actionName, // action name that will be dispatched each timer Interval
-                timerPeriod, // how many times should work timer
-                timerInterval = 1000, // timer interval, default - 1s
-            } = action.payload;
+        switch (action.type) {
+            case START_TIMER: {
+                const {
+                    timerName, // timer name - need for search in timers obj
+                    actionName, // action name that will be dispatched each timer Interval
+                    timerPeriod, // how many timer ticks should work timer
+                    timerInterval = 1000, // timer interval, default - 1s
+                } = action.payload;
 
-            invariant(actionName, provideMessage('actionName'));
-            invariant(timerName, provideMessage('timerName'));
+                invariant(actionName, provideMessage('actionName'));
+                invariant(timerName, provideMessage('timerName'));
 
-            // if we start timer that already started
-            if (timers[timerName]) {
-                clearInterval(timers[timerName].interval);
-            }
-            // clear
-            timers[timerName] = {};
-            const current = timers[timerName];
+                // if we start timer that already started
+                if (timers[timerName]) {
+                    clearInterval(timers[timerName].interval);
+                }
+                // clear
+                timers[timerName] = {};
+                const current = timers[timerName];
 
-            // set action name
-            current.actionName = actionName;
+                // set action name
+                current.actionName = actionName;
 
-            // if timer period provided
-            if (timerPeriod) {
-                current.period = timerPeriod;
-                current.interval = setInterval(() => {
-                    current.period -= 1;
-                    if (current.period === 0) {
-                        clearInterval(current.interval);
-                        // last tick and then end
+                // if timer period provided
+                if (timerPeriod) {
+                    current.period = timerPeriod;
+                    current.interval = setInterval(() => {
+                        current.period -= 1;
+                        if (current.period === 0) {
+                            clearInterval(current.interval);
+                            // last tick and then end
+                            dispatch({type: actionName});
+                            // dispatch end action
+                            dispatch({type: `${actionName}_END`});
+                        } else {
+                            dispatch({type: actionName});
+                        }
+                    }, timerInterval);
+                } else { // endless timer - we should stop by hand
+                    timers[timerName].interval = setInterval(() => {
                         dispatch({type: actionName});
-                        // dispatch end action
-                        dispatch({type: `${actionName}_END`});
-                    } else {
-                        dispatch({type: actionName});
-                    }
-                }, timerInterval);
-            } else { // endless timer - we should stop by hand
-                timers[timerName].interval = setInterval(() => {
-                    dispatch({type: actionName});
-                }, timerInterval);
+                    }, timerInterval);
+                }
+
+                break;
             }
-        } else if (action.type === STOP_TIMER) {
-            const {timerName, timerNames = []} = action.payload;
-            timerNames.forEach(item => clearTimerWithEnd(item));
-            clearTimerWithEnd(timerName);
-        } else {
-            return next(action);
+
+            case STOP_TIMER: {
+                const {timerName, timerNames = []} = action.payload;
+                timerNames.forEach(item => clearTimerWithEnd(item));
+                clearTimerWithEnd(timerName);
+
+                break;
+            }
+
+            default: {
+                return next(action);
+            }
         }
     };
 }
