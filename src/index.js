@@ -21,7 +21,8 @@ export default function timerMiddleware({dispatch}) {
             case START_TIMER: {
                 const {
                     timerName, // timer name - need for search in timers obj
-                    actionName, // action name that will be dispatched each timer Interval
+                    actionName, // action name that will be dispatched each timer interval
+                    actionPayload, // action payload that will be dispatched each timer interval
                     timerPeriod, // how many timer ticks should work timer
                     timerInterval = 1000, // timer interval, default - 1s
                 } = action.payload;
@@ -48,11 +49,17 @@ export default function timerMiddleware({dispatch}) {
                         if (current.period === 0) {
                             clearInterval(current.interval);
                             // last tick and then end
-                            dispatch({type: actionName});
+                            dispatch({
+                                type: actionName,
+                                payload: actionPayload
+                            });
                             // dispatch end action
                             dispatch({type: `${actionName}_END`});
                         } else {
-                            dispatch({type: actionName});
+                            dispatch({
+                                type: actionName,
+                                payload: actionPayload
+                            });
                         }
                     }, timerInterval);
                 } else { // endless timer - we should stop by hand

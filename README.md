@@ -4,8 +4,8 @@ Simple middleware to dispatch actions periodically
 ## Installation
 
     $ npm i --save redux-timer-middleware
-    
-    
+
+
 ## Usage
 
 ```javascript
@@ -18,6 +18,7 @@ applyMiddleware(timerMiddleware)(createStore)
 You need to dispatch action START_TIMER and provide in payload:
 - actionName (required) - action that will be dispatched each timer tick
 - timerName (required) - timer name (need for stop feature)
+- actionPayload - payload that will be provided to the actionName
 - timerInterval - interval in ms (default 1000)
 - timerPeriod - tick count after which timer ends, when timer ends - action name with _END will be dispatched
 
@@ -40,7 +41,21 @@ dispatch({
 });
 ```
 
-To stop this timer: 
+With a payload:
+```javascript
+import {START_TIMER} from 'redux-timer-middleware';
+
+dispatch({
+    type: START_TIMER,
+    payload: {
+        actionName: 'SOME_ACTION_TICK',
+        actionPayload: { /* my cool payload */ },
+        timerName: 'infiniteTimer'
+    }
+});
+```
+
+To stop this timer:
 ```javascript
 import {STOP_TIMER} from 'redux-timer-middleware';
 

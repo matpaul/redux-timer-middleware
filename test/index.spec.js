@@ -26,6 +26,18 @@ describe('redux-timer-middleware', () => {
         expect(fakeNext).toBeCalledWith(action);
     });
 
+    it('should pass the intercepted action with payload to next', () => {
+        const fakeNext = jest.fn();
+        const action = {
+            type: 'FAKE',
+            payload: 'FAKE'
+        };
+
+        timerMiddleware({})(fakeNext)(action);
+
+        expect(fakeNext).toBeCalledWith(action);
+    });
+
     it('should start timer that dispatch action name', () => {
         const fakeNext = jest.fn();
         const fakeStore = mockStore({});
